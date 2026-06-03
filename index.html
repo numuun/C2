@@ -1,0 +1,2775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Search as a Premier Embedded Talent Layer — Chapter 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #1FD9C4;
+    --black: #2A2A2A;
+    --dark: #333333;
+    --card: #3A3A3A;
+    --border-dark: rgba(255,255,255,0.08);
+    --border-light: rgba(0,0,0,0.1);
+    --border: rgba(255,255,255,0.08);
+    --text: #F0F0F0;
+    --muted: #666;
+    --dim: #999;
+    /* Light section vars */
+    --light-bg: #FFFFFF;
+    --light-bg-alt: #F4F4F4;
+    --light-card: #F8F8F8;
+    --light-text: #111111;
+    --light-body: #333333;
+    --light-muted: #555555;
+    --light-dim: #777777;
+    --light-border: rgba(0,0,0,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  /* PROGRESS BAR */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--red);
+    z-index: 1000;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(13,13,13,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-brand {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .nav-brand span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  /* SECTIONS */
+  section {
+    padding: 120px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .full-bleed {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+  }
+
+  .hero-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+    margin-bottom: 8px;
+  }
+
+  .hero-title .red { color: var(--red); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--dim);
+    font-weight: 300;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.7s;
+    position: relative;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.9s;
+    position: relative;
+  }
+
+  .hero-stat {
+    padding: 28px 32px;
+    border-right: 1px solid var(--border);
+    background: rgba(20,20,20,0.8);
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .hero-stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-weight: 500;
+  }
+
+  .section-label::after {
+    content: '';
+    display: block;
+    flex: 1;
+    max-width: 80px;
+    height: 2px;
+    background: var(--red);
+    opacity: 0.5;
+  }
+
+  /* HEADINGS */
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(88px, 11vw, 140px);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    margin-bottom: 56px;
+  }
+
+  h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* =====================
+     LIGHT SECTIONS
+  ===================== */
+  .light-section {
+    background: var(--light-bg);
+    color: var(--light-text);
+  }
+
+  .light-section-alt {
+    background: var(--light-bg-alt);
+    color: var(--light-text);
+  }
+
+  .light-section section,
+  .light-section-alt section {
+    background: transparent;
+  }
+
+  /* Light section overrides */
+  .light-section h2,
+  .light-section-alt h2 {
+    color: var(--light-text);
+  }
+
+  .light-section h3,
+  .light-section-alt h3 {
+    color: var(--light-text);
+  }
+
+  .light-section .section-label,
+  .light-section-alt .section-label {
+    color: var(--red);
+  }
+
+  .light-section .section-label::after,
+  .light-section-alt .section-label::after {
+    background: var(--red);
+  }
+
+  .light-section .bullet-list li,
+  .light-section-alt .bullet-list li {
+    color: var(--light-body);
+  }
+
+  .light-section .divider,
+  .light-section-alt .divider {
+    border-color: var(--light-border);
+  }
+
+  .light-section .tag,
+  .light-section-alt .tag {
+    background: rgba(200,16,46,0.08);
+    border-color: rgba(200,16,46,0.2);
+    color: var(--red);
+  }
+
+  /* Light cards */
+  .light-section .pillar-card,
+  .light-section-alt .pillar-card {
+    background: #fff;
+    border: 1px solid var(--light-border);
+  }
+
+  .light-section .pillar-grid,
+  .light-section-alt .pillar-grid {
+    border-color: var(--light-border);
+  }
+
+  .light-section .pillar-card,
+  .light-section-alt .pillar-card { border-right-color: var(--light-border); }
+
+  .light-section .pillar-num,
+  .light-section-alt .pillar-num { color: rgba(200,16,46,0.1); }
+
+  .light-section .pillar-body,
+  .light-section-alt .pillar-body { color: var(--light-muted); }
+
+  .light-section .position-grid,
+  .light-section-alt .position-grid { border-color: var(--light-border); }
+
+  .light-section .position-block,
+  .light-section-alt .position-block {
+    background: #fff;
+    border-right-color: var(--light-border);
+  }
+
+  .light-section .service-item,
+  .light-section-alt .service-item { border-color: var(--light-border); }
+
+  .light-section .service-name,
+  .light-section-alt .service-name { color: var(--light-text); }
+
+  .light-section .service-desc,
+  .light-section-alt .service-desc { color: var(--light-muted); }
+
+  .light-section .personal-statement,
+  .light-section-alt .personal-statement { color: var(--light-text); }
+
+  .light-section .demand-grid,
+  .light-section-alt .demand-grid { border-color: var(--light-border); }
+
+  .light-section .demand-card,
+  .light-section-alt .demand-card {
+    background: #fff;
+    border-right-color: var(--light-border);
+    border-bottom-color: var(--light-border);
+  }
+
+  .light-section .demand-title,
+  .light-section-alt .demand-title { color: var(--light-text); }
+
+  .light-section .demand-body,
+  .light-section-alt .demand-body { color: var(--light-muted); }
+
+  .light-section .pull-quote,
+  .light-section-alt .pull-quote {
+    background: #fff;
+    border-color: var(--light-border);
+  }
+
+  .light-section .pull-quote-text,
+  .light-section-alt .pull-quote-text { color: var(--light-text); }
+
+  .light-section .pull-quote-sub,
+  .light-section-alt .pull-quote-sub { color: var(--light-muted); }
+
+  .light-section .gap-card,
+  .light-section-alt .gap-card {
+    background: #fff;
+    border-right-color: var(--light-border);
+  }
+
+  .light-section .gap-card:last-child {
+    background: rgba(200,16,46,0.04);
+    border-color: rgba(200,16,46,0.2);
+  }
+
+  .light-section .gap-name,
+  .light-section-alt .gap-name { color: var(--light-text); }
+
+  .light-section .gap-type,
+  .light-section-alt .gap-type { color: var(--light-dim); }
+
+  .light-section .gap-strength,
+  .light-section-alt .gap-strength { color: var(--light-muted); }
+
+  .light-section .gap-grid,
+  .light-section-alt .gap-grid { border-color: var(--light-border); }
+
+  .light-section .stat-strip,
+  .light-section-alt .stat-strip {
+    background: #111;
+  }
+
+  .light-section .expandable,
+  .light-section-alt .expandable { border-color: var(--light-border); }
+
+  .light-section .expandable-header,
+  .light-section-alt .expandable-header {
+    background: #f0f0f0;
+  }
+
+  .light-section .expandable-header:hover,
+  .light-section-alt .expandable-header:hover {
+    background: rgba(200,16,46,0.05);
+  }
+
+  .light-section .expandable-title,
+  .light-section-alt .expandable-title { color: var(--light-text); }
+
+  .light-section .expandable-content,
+  .light-section-alt .expandable-content {
+    background: #fafafa;
+    border-color: var(--light-border);
+  }
+
+  .light-section .audience-grid,
+  .light-section-alt .audience-grid { border-color: var(--light-border); }
+
+  .light-section .audience-col,
+  .light-section-alt .audience-col {
+    background: #fff;
+    border-right-color: var(--light-border);
+  }
+
+  .light-section .audience-item,
+  .light-section-alt .audience-item { border-color: rgba(0,0,0,0.06); }
+
+  .light-section .audience-name,
+  .light-section-alt .audience-name { color: var(--light-text); }
+
+  .light-section .audience-roles,
+  .light-section-alt .audience-roles { color: var(--light-muted); }
+
+  .light-section .platform-tile,
+  .light-section-alt .platform-tile {
+    background: #fff;
+    border-color: var(--light-border);
+  }
+
+  .light-section .platform-tile:hover,
+  .light-section-alt .platform-tile:hover {
+    background: rgba(200,16,46,0.02);
+    border-color: rgba(200,16,46,0.25);
+  }
+
+  .light-section .platform-name,
+  .light-section-alt .platform-name { color: var(--light-text); }
+
+  .light-section .platform-desc,
+  .light-section-alt .platform-desc { color: var(--light-muted); }
+
+  .light-section .platform-detail-inner,
+  .light-section-alt .platform-detail-inner { border-color: var(--light-border); }
+
+  .light-section .platform-detail-item,
+  .light-section-alt .platform-detail-item { color: var(--light-muted); }
+
+  .light-section .content-grid,
+  .light-section-alt .content-grid { border-color: var(--light-border); }
+
+  .light-section .content-item,
+  .light-section-alt .content-item {
+    background: #fff;
+    border-right-color: var(--light-border);
+    border-bottom-color: var(--light-border);
+  }
+
+  .light-section .content-title,
+  .light-section-alt .content-title { color: var(--light-text); }
+
+  .light-section .content-sub,
+  .light-section-alt .content-sub { color: var(--light-muted); }
+
+  .light-section .vision-block,
+  .light-section-alt .vision-block {
+    background: #111;
+    border-color: var(--red);
+  }
+
+  .light-section .vision-text,
+  .light-section-alt .vision-text { color: #f0f0f0; }
+
+  .light-section .kpi-card,
+  .light-section-alt .kpi-card {
+    background: #fff;
+    border-right-color: var(--light-border);
+  }
+
+  .light-section .kpi-grid,
+  .light-section-alt .kpi-grid { border-color: var(--light-border); }
+
+  .light-section .kpi-label,
+  .light-section-alt .kpi-label { color: var(--light-text); }
+
+  .light-section .kpi-sub,
+  .light-section-alt .kpi-sub { color: var(--light-muted); }
+
+  .light-section .team-row,
+  .light-section-alt .team-row { border-color: var(--light-border); }
+
+  .light-section .team-card,
+  .light-section-alt .team-card {
+    background: #fff;
+    border-right-color: var(--light-border);
+  }
+
+  .light-section .team-card-title,
+  .light-section-alt .team-card-title { color: var(--light-text); }
+
+  .light-section .team-card-role,
+  .light-section-alt .team-card-role { color: var(--light-muted); }
+
+  .light-section .rev-table th,
+  .light-section-alt .rev-table th {
+    background: #f0f0f0;
+    color: var(--red);
+    border-color: var(--light-border);
+  }
+
+  .light-section .rev-table td,
+  .light-section-alt .rev-table td {
+    color: var(--light-body);
+    border-color: var(--light-border);
+  }
+
+  .light-section .rev-table,
+  .light-section-alt .rev-table { border-color: var(--light-border); }
+
+  .light-section .rev-table .total-row td,
+  .light-section-alt .rev-table .total-row td {
+    background: rgba(200,16,46,0.05);
+    color: var(--light-text);
+  }
+
+  .light-section .fund-table th,
+  .light-section-alt .fund-table th {
+    background: #f0f0f0;
+    color: var(--red);
+    border-color: var(--light-border);
+  }
+
+  .light-section .fund-table td,
+  .light-section-alt .fund-table td {
+    color: var(--light-body);
+    border-color: rgba(0,0,0,0.06);
+  }
+
+  .light-section .fund-table td:nth-child(2),
+  .light-section-alt .fund-table td:nth-child(2) {
+    color: #111;
+    font-weight: 700;
+  }
+
+  .light-section .fund-table,
+  .light-section-alt .fund-table { border-color: var(--light-border); }
+
+  .light-section .tier-actions,
+  .light-section-alt .tier-actions {
+    background: rgba(200,16,46,0.04);
+    border-color: rgba(200,16,46,0.15);
+  }
+
+  .light-section .tier-action-item,
+  .light-section-alt .tier-action-item { color: var(--light-body); }
+
+  .light-section .growth-card,
+  .light-section-alt .growth-card {
+    background: #fff;
+    border-right-color: var(--light-border);
+  }
+
+  .light-section .growth-grid,
+  .light-section-alt .growth-grid { border-color: var(--light-border); }
+
+  .light-section .growth-title,
+  .light-section-alt .growth-title { color: var(--light-text); }
+
+  .light-section .growth-items li,
+  .light-section-alt .growth-items li { color: var(--light-muted); }
+
+  .light-section .timeline-title,
+  .light-section-alt .timeline-title { color: var(--light-text); }
+
+  .light-section .timeline-items li,
+  .light-section-alt .timeline-items li { color: var(--light-muted); }
+
+  .light-section .timeline::before,
+  .light-section-alt .timeline::before { background: var(--light-border); }
+
+  /* Footer always dark */
+  footer {
+    background: var(--black);
+  }
+
+  /* BULLETS */
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .bullet-list li {
+    display: flex;
+    gap: 16px;
+    font-size: 16px;
+    color: #ccc;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .bullet-list li::before {
+    content: '—';
+    color: var(--red);
+    flex-shrink: 0;
+    font-weight: 400;
+  }
+
+  /* PILLAR CARDS */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  .pillar-card {
+    background: var(--card);
+    padding: 40px 32px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar-card:last-child { border-right: none; }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .pillar-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: rgba(31,217,196,0.12);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .pillar-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .pillar-body {
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* POSITIONING GRID */
+  .position-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  .position-block {
+    background: var(--card);
+    padding: 40px;
+    border-right: 1px solid var(--border);
+  }
+
+  .position-block:last-child { border-right: none; }
+
+  .position-block h3 {
+    margin-bottom: 24px;
+    color: var(--red);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+  }
+
+  .service-item {
+    border-top: 1px solid var(--border);
+    padding: 20px 0;
+  }
+
+  .service-item:last-child { border-bottom: 1px solid var(--border); }
+
+  .service-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* PERSONAL POSITIONING */
+  .personal-statement {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(24px, 3vw, 40px);
+    line-height: 1.2;
+    color: var(--text);
+    border-left: 3px solid var(--red);
+    padding-left: 28px;
+    margin-bottom: 48px;
+    letter-spacing: 0.02em;
+  }
+
+  /* DEMAND CARDS */
+  .demand-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  .demand-card {
+    background: var(--card);
+    padding: 36px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .demand-icon {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .demand-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .demand-body {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* PULL QUOTES */
+  .quote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .pull-quote {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    padding: 32px;
+  }
+
+  .pull-quote-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .pull-quote-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .pull-quote-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+
+  /* COMPETITIVE GAP */
+  .gap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 48px;
+    margin-bottom: 24px;
+  }
+
+  .gap-card {
+    background: var(--card);
+    padding: 40px 32px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gap-card:last-child {
+    border-right: none;
+    background: rgba(31,217,196,0.06);
+    border: 1px solid rgba(31,217,196,0.2);
+  }
+
+  .gap-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .gap-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .gap-card:last-child .gap-name { color: var(--red); }
+
+  .gap-strength {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    font-weight: 300;
+  }
+
+  .gap-weakness {
+    font-size: 13px;
+    color: var(--red);
+    line-height: 1.5;
+    font-weight: 300;
+    opacity: 0.8;
+  }
+
+  /* STAT PANEL */
+  .stat-strip {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .stat-strip-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+  }
+
+  .stat-cell {
+    padding: 48px 32px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-cell:last-child { border-right: none; }
+
+  .stat-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--dim);
+    font-weight: 300;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .stat-source {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* EXPANDABLE */
+  .expandable {
+    border: 1px solid var(--border);
+    margin-bottom: 1px;
+    overflow: hidden;
+  }
+
+  .expandable-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px;
+    cursor: pointer;
+    background: var(--card);
+    transition: background 0.2s;
+    user-select: none;
+  }
+
+  .expandable-header:hover { background: rgba(31,217,196,0.06); }
+
+  .expandable-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .expandable-toggle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    transition: transform 0.3s;
+  }
+
+  .expandable.open .expandable-toggle { transform: rotate(45deg); }
+
+  .expandable-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .expandable.open .expandable-body { max-height: 2000px; }
+
+  .expandable-content {
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    background: var(--black);
+  }
+
+  /* AUDIENCE GRID */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  .audience-col {
+    background: var(--card);
+    padding: 36px 28px;
+    border-right: 1px solid var(--border);
+  }
+
+  .audience-col:last-child { border-right: none; }
+
+  .audience-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .audience-item {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .audience-name {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .audience-roles {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* PLATFORM TILES */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .platform-tile {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .platform-tile:hover {
+    border-color: rgba(31,217,196,0.3);
+    background: rgba(31,217,196,0.04);
+  }
+
+  .platform-tile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .platform-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .platform-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--red);
+    border: 1px solid rgba(31,217,196,0.3);
+    padding: 3px 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .platform-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .platform-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .platform-tile.open .platform-detail { max-height: 400px; }
+
+  .platform-detail-inner {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .platform-detail-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #999;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .platform-detail-item::before {
+    content: '→';
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  /* CONTENT PILLARS */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  .content-item {
+    background: var(--card);
+    padding: 28px 32px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .content-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: rgba(31,217,196,0.15);
+    position: absolute;
+    top: 16px;
+    right: 20px;
+  }
+
+  .content-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .content-sub {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* VISION */
+  .vision-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    padding: 60px;
+    margin-top: 48px;
+    margin-bottom: 80px;
+  }
+
+  .vision-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .vision-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    margin-top: 48px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 24px;
+    right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .timeline-track {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .timeline-item {
+    padding-top: 48px;
+    padding-right: 24px;
+    position: relative;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 2px solid var(--black);
+    box-shadow: 0 0 0 1px var(--red);
+  }
+
+  .timeline-period {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .timeline-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .timeline-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .timeline-items li {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.4;
+    display: flex;
+    gap: 8px;
+  }
+
+  .timeline-items li::before {
+    content: '·';
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  /* KPI CARDS */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  .kpi-card {
+    background: var(--card);
+    padding: 40px 32px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .kpi-card:last-child { border-right: none; }
+
+  .kpi-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .kpi-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* TEAM */
+  .team-chart {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .team-you {
+    background: var(--red);
+    padding: 20px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .team-you::after {
+    content: '';
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+  }
+
+  .team-you-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .team-you-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  .team-connector {
+    width: 100%;
+    max-width: 800px;
+    height: 32px;
+    position: relative;
+    margin-top: 0;
+  }
+
+  .team-connector::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .team-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    width: 100%;
+    max-width: 900px;
+    border: 1px solid var(--border);
+    margin-top: 32px;
+  }
+
+  .team-card {
+    background: var(--card);
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .team-card:last-child { border-right: none; }
+
+  .team-card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .team-card-role {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .team-card-when {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.08em;
+    margin-top: 10px;
+  }
+
+  /* REVENUE TABLE */
+  .rev-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 48px;
+    border: 1px solid var(--border);
+  }
+
+  .rev-table th {
+    background: var(--card);
+    padding: 20px 28px;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rev-table td {
+    padding: 18px 28px;
+    font-size: 14px;
+    color: #ccc;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-weight: 300;
+  }
+
+  .rev-table tr:last-child td { border-bottom: none; }
+
+  .rev-table .total-row td {
+    background: rgba(31,217,196,0.06);
+    color: var(--text);
+    font-weight: 600;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+  }
+
+  .rev-table .total-row td:first-child { color: var(--red); }
+
+  /* FUND TIERS */
+  .fund-tier-wrap { margin-top: 48px; }
+
+  .fund-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+  }
+
+  .fund-table th {
+    background: var(--card);
+    padding: 14px 20px;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fund-table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: #bbb;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-weight: 300;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .fund-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .fund-table td:nth-child(2) {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .tier-actions {
+    background: rgba(31,217,196,0.06);
+    border: 1px solid rgba(31,217,196,0.15);
+    padding: 28px 32px;
+    margin-top: 16px;
+  }
+
+  .tier-action-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .tier-action-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #ccc;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .tier-action-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--red);
+    flex-shrink: 0;
+    line-height: 1.2;
+  }
+
+  /* GROWTH */
+  .growth-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  .growth-card {
+    background: var(--card);
+    padding: 36px 28px;
+    border-right: 1px solid var(--border);
+  }
+
+  .growth-card:last-child { border-right: none; }
+
+  .growth-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .growth-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .growth-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .growth-items li {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    display: flex;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .growth-items li::before {
+    content: '→';
+    color: var(--red);
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .closing-statement {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 56px);
+    line-height: 1.05;
+    color: var(--text);
+    margin-bottom: 48px;
+    max-width: 800px;
+  }
+
+  .closing-statement .red { color: var(--red); }
+
+  .footer-meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-ref {
+    background: rgba(31,217,196,0.06);
+    border: 1px solid rgba(31,217,196,0.15);
+    padding: 20px 24px;
+    max-width: 400px;
+  }
+
+  .footer-ref-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .footer-ref-text {
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .footer-contact {
+    text-align: right;
+  }
+
+  .footer-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .footer-email {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .footer-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SECTION DIVIDERS */
+  .section-border {
+    border-top: 1px solid var(--border);
+  }
+
+  /* INLINE TAG */
+  .tag {
+    display: inline-block;
+    background: rgba(200,16,46,0.08);
+    border: 1px solid rgba(200,16,46,0.2);
+    padding: 4px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #hero { padding: 0 24px 60px; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .pillar-grid, .position-grid, .demand-grid,
+    .audience-grid, .platform-grid, .kpi-grid,
+    .gap-grid, .growth-grid { grid-template-columns: 1fr; }
+    .quote-grid, .content-grid { grid-template-columns: 1fr; }
+    .stat-strip-inner { grid-template-columns: repeat(2, 1fr); }
+    .timeline-track { grid-template-columns: 1fr; }
+    .team-row { grid-template-columns: 1fr; }
+    .rev-table { font-size: 12px; }
+    footer { padding: 48px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">CHAPTER 2 <span>EXECUTIVE SEARCH</span></div>
+  <ul class="nav-links">
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#gtm">GTM</a></li>
+    <li><a href="#commercial">Commercial</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-tag">Chapter 2 · Executive Search · Premium Embedded Talent Add-On</div>
+  <div class="hero-title">Executive<br>Search for<br><span class="red">PE/VC</span><br>in the Agentic<br>Era</div>
+  <div class="hero-sub">Elevating Chapter 2's Embedded Talent model with strategic executive search for high-growth and transformational leaders</div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION 1: INTRODUCTION -->
+<div class="light-section-alt">
+<section id="intro">
+  <div class="section-label">01 — Introduction</div>
+  <h2>The<br>Opportunity</h2>
+  <p style="font-size: 20px; color: #111; font-weight: 500; line-height: 1.4; max-width: 700px; margin-bottom: 40px;">The rise of Agentic AI is driving the biggest transformation in the tech ecosystem since the launch of the internet.</p>
+
+  <ul class="bullet-list fade-in">
+    <li>PE/VC-backed SaaS and technology businesses are particularly exposed to AI disruption — significant risk of catastrophic losses for funds that get this wrong</li>
+    <li>Technology advances are moving faster than companies can adapt and talent can be developed</li>
+    <li>The majority of digital and technology investments have not delivered expected results</li>
+    <li>Leaders capable of closing the execution gap are genuinely scarce — hands-on agentic experience at scale is rare, demand structurally outpaces supply</li>
+    <li>Leadership mandates increasingly require proven experience in AI and agentic transformation</li>
+  </ul>
+
+  <!-- Market Positioning: Practice -->
+  <div style="margin-top: 80px;">
+    <div class="section-label">Market Positioning — Practice</div>
+    <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 900; color: #111; line-height: 1.05; letter-spacing: 0.01em; margin-bottom: 16px;">The market leading search &amp; advisory division for technical leadership in the Agentic Era</h3>
+    <p style="font-size: 18px; color: #111; font-weight: 500; line-height: 1.5; max-width: 680px; margin-bottom: 20px; font-style: italic; border-left: 3px solid var(--red); padding-left: 24px;">
+      The goal is not for the practice to be the first the network thinks of when they need a search. It's the first they think of when they need a solution.
+    </p>
+    <p style="font-size: 16px; color: #333; font-weight: 300; line-height: 1.7; max-width: 680px; margin-bottom: 0;">
+      The most consequential technical leadership appointments — CTO, CIO, CPO, board NED — require a depth of understanding that generalist search firms don't have and technical recruiters don't operate at. We sit in the gap, with the relationships and expertise to close it.
+    </p>
+  </div>
+
+  <div class="position-grid fade-in" style="margin-top: 40px;">
+    <div class="position-block">
+      <h3>Portfolio Side</h3>
+      <div class="service-item">
+        <div class="service-name">CTO, CIO &amp; CPO Search (Interim &amp; Permanent)</div>
+        <div class="service-desc">Executive search for technology and product leadership at PE-backed, VC-backed and enterprise businesses navigating AI and agentic transformation.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-name">Technical Board &amp; NED</div>
+        <div class="service-desc">Board-level appointments where AI and agentic transformation credibility is the brief. A pre-qualified bench of senior technical leaders for NED, advisory and committee roles.</div>
+      </div>
+    </div>
+    <div class="position-block" style="border-right: none;">
+      <h3>Fund Side</h3>
+      <div class="service-item">
+        <div class="service-name">Value Creation Teams</div>
+        <div class="service-desc">AI and technology Operating Partner appointments — fund-side operating bench hires for PE/VC and VC funds building their agentic transformation capability.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-name">AI &amp; Tech Operating Partner</div>
+        <div class="service-desc">The most contemporary, hard-to-fill seat in the market. Leaders who run the AI transformation playbook across the entire portfolio — not just individual businesses.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Market Positioning: Personal -->
+  <div style="margin-top: 80px;">
+    <div class="section-label">Market Positioning — Personal</div>
+    <p style="font-size: 20px; color: #111; font-weight: 600; line-height: 1.4; max-width: 680px; margin-bottom: 28px; font-style: italic; border-left: 3px solid var(--red); padding-left: 24px;">To be the most connected and informed CTO recruiter in the market — known for deep connectivity and market-leading knowledge.</p>
+    <ul class="bullet-list fade-in">
+      <li>15+ years delivering senior technology leadership mandates — CTO, CIO, CPO — across fintech, AI, deep tech and enterprise technology</li>
+      <li>Track record across the full matrix — PE-backed, VC-backed, founder-led, enterprise — across APAC, MENA and Europe</li>
+      <li>Recently delivered AI Operating Partner and technical leadership mandates at fund level (Julien Simon, Senior AI Operating Partner — Fortino Capital) and into PE/VC portfolio businesses</li>
+    </ul>
+
+    <!-- Track Record expandable -->
+    <div style="margin-top: 48px;">
+      <div class="expandable" id="track-expand">
+        <div class="expandable-header" onclick="toggleExpand('track-expand')">
+          <span class="expandable-title">Track Record — Selected Placements</span>
+          <span class="expandable-toggle">+</span>
+        </div>
+        <div class="expandable-body">
+          <div class="expandable-content">
+            <p style="font-size: 13px; color: #555; margin-bottom: 24px; font-weight: 300; line-height: 1.6;">Selected executive and senior leadership placements across PE-backed, VC-backed, growth-stage and enterprise businesses. Delivered across APAC, MENA and Europe.</p>
+
+            <!-- PE/VC / Fund -->
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e8e8e8;">Private Equity &amp; Fund-Side</div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 28px;">
+              <thead>
+                <tr style="background: #f5f5f5;">
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Company</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Role</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Context</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Stage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Fortino Capital</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">Sr Operating Partner — AI</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">B2B SaaS PE/VC fund conducting agentic transformation at fund and portfolio level. Julien Simon — ex-AWS, Hugging Face.</td>
+                  <td style="padding: 10px 14px;"><span style="background: rgba(31,217,196,0.08); color: var(--red); font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">PE Fund</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Dubai Future District Fund</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">Senior Associate × 2</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">UAE-based Fund of Funds investing into VC funds across EU and US. One placement closed, one live.</td>
+                  <td style="padding: 10px 14px;"><span style="background: rgba(31,217,196,0.08); color: var(--red); font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Fund</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Confidential</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">UXUI Practice Lead</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Agentic architecture-fluent design lead. In process.</td>
+                  <td style="padding: 10px 14px;"><span style="background: rgba(31,217,196,0.08); color: var(--red); font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">PE/VC</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Enterprise / Technology / SaaS -->
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e8e8e8;">Enterprise, Technology &amp; SaaS Platforms</div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 28px;">
+              <thead>
+                <tr style="background: #f5f5f5;">
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Company</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Role</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Context</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Stage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">GlycanAge</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">Interim CTO + Chairman + Head of Sales</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Biological age test (Glycan proteins). Three hires across technology, board and GTM.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Seed / Series A</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Circles Life</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">VP Product + VP Engineering + Head of Data + VP Product</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Disruptor telco building Telco-in-a-Box for emerging markets. Four senior hires.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Late Growth</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">PropertyGuru</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">VP Product</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Singapore proptech — IPO'd, subsequently acquired by EQT.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Late Growth / IPO</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Rokt</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">SVP Engineering</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Australian martech company. Late growth stage.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Late Growth</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Ascenda</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">CPO</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Loyalty platform for SME fintechs, Singapore.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Growth</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Alfan Group</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">CTO</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Influencer platform and ecosystem play, Dubai.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Series A</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Jumia</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">Director Engineering + Director Product + SVP Engineering</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Africa eCommerce platform and super app, leadership based in Porto. Three senior hires.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Late Growth</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Fintech / Neobanking / Payments -->
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e8e8e8;">Fintech, Neobanking &amp; Payments</div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+              <thead>
+                <tr style="background: #f5f5f5;">
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Company</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Role</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Context</th>
+                  <th style="padding: 10px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid #e0e0e0;">Stage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Confidential</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">CIO</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Insurance company — legacy to agentic transformation mandate, EU.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Enterprise</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Experian</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">MD Japan + MD India</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Data &amp; credit scoring — APAC commercial leadership. Public.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Public</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Confidential</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">Chief Product Officer</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">EU Neobank. Pre-IPO.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Pre-IPO</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Judo Bank</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">CTO</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Australian neobank in SMB segment. Post-IPO.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Post-IPO</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Moneylion</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">CTO</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">US-HQ'd financial wellness company, KL office.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Late Growth</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Maya</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">SVP Engineering × 2</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Leading Philippine fintech and neobank. Two senior engineering hires.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Late Growth</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Equiti</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">CTO + VP Engineering × 2</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">UAE-based brokerage and trading company. Three technology hires.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Private</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Bitoasis</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">VP Engineering</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Crypto exchange, Dubai.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Series A/B</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">SAVii</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">CTO + CPO</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Fintech payroll lending and financial wellness platform. India + Philippines.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Series A</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f0f0f0; background: #fafafa;">
+                  <td style="padding: 10px 14px; font-size: 13px; font-weight: 600; color: #111;">Aplazame</td>
+                  <td style="padding: 10px 14px; font-size: 13px; color: #333;">Chief Platform Officer</td>
+                  <td style="padding: 10px 14px; font-size: 12px; color: #555; font-weight: 300;">Spanish BNPL, Wizbank subsidiary.</td>
+                  <td style="padding: 10px 14px;"><span style="background: #f0f0f0; color: #555; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase;">Series A</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="padding: 16px 20px; background: rgba(31,217,196,0.04); border: 1px solid rgba(31,217,196,0.12); margin-top: 8px;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Across APAC · MENA · Europe</div>
+              <div style="font-size: 12px; color: #555; font-weight: 300;">CTO, CIO, CPO, VP Engineering, Head of Product, AI Operating Partner, MD and board appointments. PE-backed, VC-backed, growth-stage, post-IPO and enterprise. Sectors: fintech, neobanking, payments, enterprise SaaS, eCommerce, martech, defence technology, deep tech.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- end light-section-alt -->
+
+<hr class="divider">
+
+<!-- SECTION 2: MARKET -->
+<div class="light-section">
+<section id="market">
+  <div class="section-label">02 — Market Perspective &amp; Insights</div>
+  <h2>The Market<br>Right Now</h2>
+  <p style="font-size: 20px; color: #111; font-weight: 500; line-height: 1.5; max-width: 720px; margin-bottom: 48px;">
+    Digital &amp; agentic transformation is at the core of every technology company's survival.
+  </p>
+
+  <!-- Current Themes -->
+  <div class="tag">Current themes</div>
+  <ul class="bullet-list fade-in">
+    <li>Technology leadership is in transition — from technology delivery to true business enablement</li>
+    <li>Significant legacy transformation backlog remains, transitioning through several generations of technology simultaneously</li>
+    <li>Proliferation of "digital transformation leaders" who have added AI to their profiles but don't actually understand it</li>
+    <li>Early movers who get agentic transformation right will win — software is no longer a moat</li>
+    <li>94% of CIOs expect major changes to their plans within 24 months, yet only 48% of digital initiatives meet or exceed targets</li>
+  </ul>
+
+
+      <div class="expandable-body">
+        <div class="expandable-content">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+            <div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #888; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ddd;">Global Generalists</div>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Korn Ferry</span> — Digital/tech exec practice, global scale. No agentic depth.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Heidrick &amp; Struggles</span> — CTO transitions. Lacks agentic-specific depth.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Spencer Stuart</span> — Board-level tech governance. Too boardroom-centric.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Russell Reynolds</span> — Strong on PE, weak on agentic transformation.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Egon Zehnder</span> — Advisory-heavy, not a delivery search firm.</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #888; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ddd;">London Boutiques</div>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Aruba Exec</span> — Deep tech C-suite. Not PE-focused, no agentic thesis.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Fram Search</span> — PE/VC operating partners. Limited CTO technical depth.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Riviera Partners</span> — VC-native CTO search. Limited PE/VC value creation lens.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">True Search</span> — AI/ML talent. Strong technical, weak PE/transformation context.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Harnham</span> — Data/analytics. Not transformation-focused.</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #888; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #ddd;">Adjacent / Emerging</div>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Barton Partnership</span> — Strongest PE/VC operating partner play. CTO/tech practice is what they're building.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">Kingsley Gate</span> — Tech practice growing. Weak brand perception, no distinct thesis.</div>
+                <div style="font-size: 13px; color: #444; font-weight: 300;"><span style="color: #111; font-weight: 600;">ZRG Partners</span> — Global reach. Aggressive/salesy culture — not a trusted-advisor model.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- end light-section -->
+
+<hr class="divider">
+
+<!-- SECTION 3: GTM -->
+<div class="light-section-alt">
+<section id="gtm">
+  <div class="section-label">03 — Go-To-Market Strategy</div>
+  <h2>Building<br>The Practice</h2>
+
+  <!-- Audiences -->
+  <div class="tag">Audiences &amp; economic buyers</div>
+  <div class="audience-grid fade-in">
+    <div class="audience-col">
+      <div class="audience-label">Fund Side</div>
+      <div class="audience-item">
+        <div class="audience-name">Value Creation Teams</div>
+        <div class="audience-roles">Audience · Economic Buyer · Champion</div>
+      </div>
+      <div class="audience-item">
+        <div class="audience-name">Operating Partners</div>
+        <div class="audience-roles">Audience · Economic Buyer · Champion</div>
+      </div>
+      <div class="audience-item">
+        <div class="audience-name">Talent Partners</div>
+        <div class="audience-roles">Audience · Economic Buyer · Champion</div>
+      </div>
+    </div>
+    <div class="audience-col">
+      <div class="audience-label">Portfolio Side</div>
+      <div class="audience-item">
+        <div class="audience-name">CEOs, CTOs, CIOs</div>
+        <div class="audience-roles">Audience · Economic Buyer · Champion</div>
+      </div>
+      <div class="audience-item">
+        <div class="audience-name">Talent Partners</div>
+        <div class="audience-roles">Audience · Champion</div>
+      </div>
+    </div>
+    <div class="audience-col">
+      <div class="audience-label">Community Side</div>
+      <div class="audience-item">
+        <div class="audience-name">CTOs &amp; CPOs</div>
+        <div class="audience-roles">Audience · Economic Buyer · Champion</div>
+      </div>
+      <div class="audience-item">
+        <div class="audience-name">Technical Transformation Leaders</div>
+        <div class="audience-roles">Audience · Economic Buyer · Champion</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sector Priority -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Sector priority</div>
+    <p style="font-size: 16px; color: var(--dim); font-weight: 300; line-height: 1.7; max-width: 700px; margin-bottom: 40px;">
+      Most businesses are facing the same challenges — the sectorial split provides focus. Start where the relationships are warmest and the mandate signals are clearest.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 1px solid var(--border);">
+      <div style="background: var(--card); padding: 36px; border-right: 1px solid var(--border);">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px;">Year 1 — Primary focus</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); margin-bottom: 12px;">B2B SaaS &amp; Enterprise Software</div>
+        <div style="font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.6; margin-bottom: 20px;">Largest cluster in Chapter 2's PE/VC client list. Most immediate mandate need. Every portco on the list is wrestling with the AI transition right now.</div>
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); margin-bottom: 8px;">Fintech</div>
+        <div style="font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.6;">Natural adjacency and existing network depth. Regulated environment requires specialist understanding — and commands higher fees.</div>
+      </div>
+      <div style="background: var(--card); padding: 36px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px;">Year 2-3 — Expansion</div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); margin-bottom: 6px;">Enterprise</div>
+            <div style="font-size: 13px; color: var(--muted); font-weight: 300;">FTSE-level CTO and technology leadership appointments. Cross-sell via Zeren and direct Chapter 2 relationships.</div>
+          </div>
+          <div>
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); margin-bottom: 6px;">3-Year Vision</div>
+            <div style="font-size: 13px; color: var(--muted); font-weight: 300;">The recognised premium executive search practice integrated within Chapter 2's Embedded Talent & Advisory model, delivering strategic C-suite and transformational leadership appointments.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Regional Considerations -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Regional Considerations</div>
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 32px;">
+      <div style="background: var(--card); padding: 20px; border: 1px solid var(--border);">
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; color: var(--red); margin-bottom: 8px;">UK</div>
+        <div style="font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.6;">Year 1 focus. Primary fund client base, existing network depth. London HQ.</div>
+      </div>
+      <div style="background: var(--card); padding: 20px; border: 1px solid var(--border);">
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; color: var(--red); margin-bottom: 8px;">EU</div>
+        <div style="font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.6;">Year 1-2 expansion. Netherlands, Germany, Nordics, France. Fund relationships driving mandate flow.</div>
+      </div>
+      <div style="background: var(--card); padding: 20px; border: 1px solid var(--border);">
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; color: var(--red); margin-bottom: 8px;">US</div>
+        <div style="font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.6;">Year 2+ expansion. Fund client presence and portfolio company demand drives entry.</div>
+      </div>
+      <div style="background: var(--card); padding: 20px; border: 1px solid var(--border);">
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; color: var(--red); margin-bottom: 8px;">MENA</div>
+        <div style="font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.6;">Year 2-3. Emerging tech and fintech clusters. GCC fund relationships.</div>
+      </div>
+      <div style="background: var(--card); padding: 20px; border: 1px solid var(--border);">
+        <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; text-transform: uppercase; color: var(--red); margin-bottom: 8px;">APAC</div>
+        <div style="font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.6;">Year 3+. Portfolio company demand and VC ecosystem.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapter 2 Platform -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Leveraging the Chapter 2 platform</div>
+    <p style="font-size: 16px; color: var(--dim); font-weight: 300; line-height: 1.7; max-width: 680px; margin-bottom: 8px;">
+      Executive search sits at the heart of Chapter 2's three-pillar model. A single retained mandate connects directly to our Transformation Advisory and Embedded Talent services — creating a seamless ecosystem for clients building high-performance teams.
+    </p>
+  </div>
+
+  <div class="platform-grid fade-in">
+    <div class="platform-tile" onclick="togglePlatform(this)">
+      <div class="platform-tile-header">
+        <div class="platform-name">Transformation Advisory</div>
+        <div class="platform-tag">Strategic Diagnostics</div>
+      </div>
+      <div class="platform-desc">Data-driven diagnostics to identify talent gaps and strategy bottlenecks.</div>
+      <div class="platform-detail">
+        <div class="platform-detail-inner">
+          <div class="platform-detail-item">Strategic workforce planning and market mapping inform exec search briefs</div>
+          <div class="platform-detail-item">Gap analysis reveals where C-suite leadership will create most impact</div>
+          <div class="platform-detail-item">Benchmarking and best practices guide talent acquisition strategy</div>
+          <div class="platform-detail-item">Proprietary frameworks ensure data-driven executive selection</div>
+        </div>
+      </div>
+    </div>
+    <div class="platform-tile" onclick="togglePlatform(this)">
+      <div class="platform-tile-header">
+        <div class="platform-name">Embedded Talent Partners</div>
+        <div class="platform-tag">In-House Integration</div>
+      </div>
+      <div class="platform-desc">Embed Chapter 2 talent partners to manage the full recruitment lifecycle.</div>
+      <div class="platform-detail">
+        <div class="platform-detail-inner">
+          <div class="platform-detail-item">Embedded partner understands organisation culture and values deeply</div>
+          <div class="platform-detail-item">Natural extension from exec search into full-team building and scaling</div>
+          <div class="platform-detail-item">End-to-end recruitment management — from brief to onboarding</div>
+          <div class="platform-detail-item">Global reach with local market insight across EMEA, APAC, NORAM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Network & Brand -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Network, Brand &amp; Credibility</div>
+    <p style="font-size: 20px; color: #111; font-weight: 600; line-height: 1.4; max-width: 680px; margin-bottom: 16px; font-style: italic; border-left: 3px solid var(--red); padding-left: 24px;">Taking a content and engagement-led approach to building market credibility.</p>
+    <p style="font-size: 16px; color: #333; font-weight: 300; line-height: 1.7; max-width: 680px; margin-bottom: 40px;">
+      Credibility in the UK market is built through presence, point of view, and the quality of the people you convene — not volume. The approach is multimodal: written content, audio, events, and community.
+    </p>
+  </div>
+
+  <div class="content-grid fade-in">
+    <div class="content-item" style="cursor: pointer;" onclick="this.classList.toggle('content-open')">
+      <div class="content-num">01</div>
+      <div class="content-title">The AI Board Opportunity</div>
+      <div class="content-sub">How the funds and businesses getting board-level AI leadership right are building a compounding advantage.</div>
+      <div class="content-detail" style="display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #e8e8e8; font-size: 12px; color: #555; font-weight: 300; line-height: 1.6;">LP pressure is pushing boards to demonstrate AI strategic credibility. The supply of technically credible AI-governance NEDs is scarce. This content creates the conversation — and the mandate pipeline. Formats: LinkedIn long-form, panel event.</div>
+    </div>
+    <div class="content-item" style="cursor: pointer;" onclick="this.classList.toggle('content-open')">
+      <div class="content-num">02</div>
+      <div class="content-title">The CTO in 2027</div>
+      <div class="content-sub">What the modern CTO role actually demands — and how agentic AI has fundamentally changed the brief.</div>
+      <div class="content-detail" style="display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #e8e8e8; font-size: 12px; color: #555; font-weight: 300; line-height: 1.6;">The most searched topic in the CTO hiring conversation right now. Positions the practice as the authority on what the modern brief actually requires. Formats: white paper, LinkedIn series, Notebook LM podcast, panel event keynote.</div>
+    </div>
+    <div class="content-item" style="cursor: pointer;" onclick="this.classList.toggle('content-open')">
+      <div class="content-num">03</div>
+      <div class="content-title">Agentic Transformation in Practice</div>
+      <div class="content-sub">What it actually means to deploy agentic AI at enterprise scale — from the talent and leadership perspective.</div>
+      <div class="content-detail" style="display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #e8e8e8; font-size: 12px; color: #555; font-weight: 300; line-height: 1.6;">Practitioner-led content — featuring operators from the advisory bench who have actually done this. Differentiates from generic AI commentary. Formats: interview series, operator roundtable write-up, infographic on deployment patterns.</div>
+    </div>
+    <div class="content-item" style="cursor: pointer;" onclick="this.classList.toggle('content-open')">
+      <div class="content-num">04</div>
+      <div class="content-title">The Technical Org of the Future</div>
+      <div class="content-sub">How software departments will change as AI rewrites what it means to build and ship technology.</div>
+      <div class="content-detail" style="display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #e8e8e8; font-size: 12px; color: #555; font-weight: 300; line-height: 1.6;">Directly relevant to PE/VC portcos facing headcount and capability decisions. Positions the practice as a strategic advisor, not just a recruiter. Formats: LinkedIn thought piece, collaborative infographic.</div>
+    </div>
+    <div class="content-item" style="cursor: pointer;" onclick="this.classList.toggle('content-open')">
+      <div class="content-num">05</div>
+      <div class="content-title">When Software Is No Longer a Moat</div>
+      <div class="content-sub">If AI commoditises software, competitive advantage moves elsewhere. What does that mean for how businesses are built, led and valued?</div>
+      <div class="content-detail" style="display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #e8e8e8; font-size: 12px; color: #555; font-weight: 300; line-height: 1.6;">The sharpest thesis for PE/VC and VC audiences — directly relevant to value creation planning and exit strategy. Strong hook for fund relationships. Formats: long-form essay, PE/VC fund briefing note, event keynote topic.</div>
+    </div>
+    <div class="content-item" style="cursor: pointer;" onclick="this.classList.toggle('content-open')">
+      <div class="content-num">06</div>
+      <div class="content-title">Market Intelligence</div>
+      <div class="content-sub">Curated movement in the market — talent, notable fund and portco developments, AI signals.</div>
+      <div class="content-detail" style="display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid #e8e8e8; font-size: 12px; color: #555; font-weight: 300; line-height: 1.6;">Regular cadence, genuinely useful. Movements in technical leadership, emerging fund strategies, new AI tools in deployment. Steer clear of obviously AI-generated content — the value is in the curation and the POV. Build readership before monetising it as a lead generation channel.</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <div style="background: #111; border: 1px solid #333; padding: 32px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;">Event Strategy</div>
+      <ul class="bullet-list" style="gap: 10px;">
+        <li style="font-size: 14px; color: #ddd;">Smaller format events for deeper connections — dinners, roundtables, semi-formal presentations</li>
+        <li style="font-size: 14px; color: #ddd;">Panel events for launch momentum — right calibre of thought leaders creates credibility by association</li>
+      </ul>
+    </div>
+    <div style="background: #111; border: 1px solid #333; padding: 32px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;">BoardWave</div>
+      <div style="font-size: 14px; color: #ddd; font-weight: 300; line-height: 1.6;">Host a quarterly CTO roundtable series — 8-10 PE-backed technical leaders, specific transformation theme. Builds community, generates content, surfaces mandates organically.</div>
+    </div>
+  </div>
+
+  <!-- UK/EU Network -->
+  <div style="margin-top: 48px;">
+    <div class="tag">UK &amp; EU Network</div>
+    <p style="font-size: 15px; color: #333; font-weight: 300; line-height: 1.6; max-width: 680px; margin-bottom: 24px;">38 first-degree relationships — PE/VC fund contacts, senior technical operators, commercial leaders and connectors. Not a database. Every person here would take a call, contribute to content, attend an event, or refer a mandate.</p>
+
+    <!-- PE/VC / Fund-Side -->
+    <div class="expandable" id="net-pe" style="margin-bottom: 1px;">
+      <div class="expandable-header" onclick="toggleExpand('net-pe')">
+        <span class="expandable-title">🏦 PE/VC &amp; Fund-Side Relationships — 7 contacts</span>
+        <span class="expandable-toggle">+</span>
+      </div>
+      <div class="expandable-body">
+        <div class="expandable-content">
+          <p style="font-size: 13px; color: #555; margin-bottom: 20px; font-weight: 300;">Direct routes into PE/VC funds — highest priority for origination.</p>
+          <table class="fund-table">
+            <thead><tr><th>Name</th><th>Role</th><th>Relevance</th><th>Location</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:700;color:#111;">Kaushik Subramanian</td><td>Partner, EQT Ventures &amp; Growth</td><td>Active PE/VC partner. Board member at Payrails &amp; Paid. INSEAD MBA. Warm contact — highest immediate conversion probability into EQT.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Mahmoud Ward</td><td>Director, Dubai Future District Fund</td><td>FoF investing into 25 EU/US VC funds. Has offered intros to all fund investments.</td><td>Dubai</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Julien Simon</td><td>AI Operating Partner, Fortino</td><td>Placed by Sam — Sr AI Operating Partner. AWS / Hugging Face / Arcee.ai pedigree. Live proof of value-creation team delivery.</td><td>Paris</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Marjel Quekel</td><td>Managing Partner, Introed</td><td>PE &amp; VC exec search. Former COO Philips Coembedded talentrate Investment Fund. Route into NL/Benelux PE/VC ecosystem.</td><td>Amsterdam</td></tr>
+              <tr><td style="font-weight:700;color:#111;">William Jones</td><td>Founding Partner, Beaumont Governance</td><td>Columbia Law / Business. Former Head of Legal, Bank of Bermuda (HSBC). Active board director. Risk/audit/NED profile. Key financial services connector.</td><td>Luxembourg</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Jamie Howkins</td><td>Non Executive Director (multiple)</td><td>ICAEW ACA. Multiple NED roles (Blacksmiths Group, Kuro). Financial services board profile.</td><td>Taunton, UK</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Calvin Bailey MBE MP</td><td>MP for Leyton &amp; Wanstead, Defence Select Committee, ex-RAF</td><td>UK Trade Envoy. King's College / Exeter MEng. Unique political/defence route for defence tech mandates.</td><td>London</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Operators -->
+    <div class="expandable" id="net-tech" style="margin-bottom: 1px;">
+      <div class="expandable-header" onclick="toggleExpand('net-tech')">
+        <span class="expandable-title">⚙️ Senior Technical Operators — 16 contacts</span>
+        <span class="expandable-toggle">+</span>
+      </div>
+      <div class="expandable-body">
+        <div class="expandable-content">
+          <p style="font-size: 13px; color: #555; margin-bottom: 20px; font-weight: 300;">CTO/CIO/CPO level — the core candidate bench and dual-track client relationships.</p>
+          <table class="fund-table">
+            <thead><tr><th>Name</th><th>Current Role</th><th>Relevance</th><th>Location</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:700;color:#111;">Vlad Gorelik</td><td>Warsaw Site Lead + Sr Director AI &amp; Compute Infrastructure, Google</td><td>One of Europe's leading CTOs. Ex-Meta Sr Director AI Infrastructure. Actively exploring legacy-to-agentic transformation mandates. "Not another hyperscaler."</td><td>Warsaw</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Valérie Coscas</td><td>Head of Partner Sales — Enterprise UK, AWS</td><td>10+ years AWS across EMEA. Strong commercial board profile. Exploring transformation mandates. PE-backed SaaS / cloud-native NED fit.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Sébastien Delautre</td><td>Group Head Transformation MD, Euroclear</td><td>Ex-SocGen Deputy Global COO. €550M+ IT budgets. 500-person orgs across 4 continents. Exceptional large-scale CIO/transformation profile.</td><td>Brussels</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Anthony Griffin</td><td>Chief Architect, Hazelcast (ex-CTO, ex-AWS)</td><td>Distributed systems, enterprise tech. Strong technical board profile. Limerick / Henley educated.</td><td>Ireland</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Miles Barr</td><td>On career break (ex-CTO RLDatix)</td><td>Imperial College MEng / London Business School. Healthcare tech CTO. Actively available. Strong PE-backed SaaS CTO profile.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Bogdan Vrusias</td><td>Global Head AI &amp; Data Engineering, The Economist + Visiting Professor, Surrey</td><td>Ex-AWS EMEA AI/ML. PhD Surrey. Strong AI/data transformation profile — board and exec.</td><td>Surrey, UK</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Niko Vuokko</td><td>Sr Director &amp; CTO, AMD Silo AI</td><td>Ex-Silo AI CTO. Aalto/Turku educated. Deep AI/ML technical leadership. EU-based.</td><td>Helsinki</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Matt Winn</td><td>Engineering Leader, Meta (ex-MD JP Morgan)</td><td>Meta ML Experimentation + JP Morgan 15 years. Imperial Business School. Rare hyperscaler + financial services engineering profile.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Ricardo Sueiras</td><td>On gardening leave from AWS</td><td>17+ AWS roles. Open source and developer ecosystem expertise. Exploring next move.</td><td>UK</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Paul Onnen</td><td>SVP Engineering &amp; Board Member, Goodnotes (ex-CTO wefox)</td><td>CPTO profile across B2C ecommerce and B2B fintech SaaS. NED Bonitasoft.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Fernando Fanton</td><td>CPTO PropertyFinder (ex-CPO Monzo, ex-CPTO Just Eat/Rappi)</td><td>Exceptional CPTO pedigree across fintech and marketplace. Wharton MBA + ML Masters.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Mal Minhas</td><td>Product &amp; Technology Board Advisor (ex-CPTO Gumtree)</td><td>Cambridge / Imperial. Angel investor. Board-level technology advisor across product and AI strategy.</td><td>Reading, UK</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Amitabh Ghatak</td><td>NED Allica Bank, Director P&amp;T The Access Group (ex-CPO Dojo)</td><td>Fintech and payments CPO/NED. Strong PE-backed tech board candidate.</td><td>UK</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Mette Hindborg Gade</td><td>CPO, Lunar (ex-CPO Pleo)</td><td>Nordic fintech CPO. Pleo / Lunar = PE-backed growth stage. DTU MSc.</td><td>Denmark</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Kwame Nyanning</td><td>Partner &amp; Chief Design Officer UK/IE, EY Studio+ / Global Head AI Experience Lab</td><td>Ex-EY Partner. Deep agentic experience design. Strong Chapter 2/agentic design connector.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Joel Belsco</td><td>Global Product Design Director, Capgemini</td><td>Agentic automation and enterprise AI design. UX/design leader in AI space.</td><td>Stockholm</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commercial Leaders -->
+    <div class="expandable" id="net-commercial" style="margin-bottom: 1px;">
+      <div class="expandable-header" onclick="toggleExpand('net-commercial')">
+        <span class="expandable-title">📈 Commercial Leaders &amp; Operators — 11 contacts</span>
+        <span class="expandable-toggle">+</span>
+      </div>
+      <div class="expandable-body">
+        <div class="expandable-content">
+          <p style="font-size: 13px; color: #555; margin-bottom: 20px; font-weight: 300;">C-suite commercial / revenue / transformation leaders — PE/VC portco executive profiles.</p>
+          <table class="fund-table">
+            <thead><tr><th>Name</th><th>Current Role</th><th>Relevance</th><th>Location</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:700;color:#111;">Daniel Byrne</td><td>Director of Engineering, KKR (ex-VP Beyond Now)</td><td>Engineering leader inside a PE/VC fund — extremely rare. Direct insight into how KKR thinks about technology leadership. Dublin/UCD.</td><td>Dublin</td></tr>
+              <tr><td style="font-weight:700;color:#111;">John Legrand</td><td>CEO EMEA, IQ-EQ (ex-Group Deputy CEO)</td><td>PE-backed CEO. M&amp;A experienced. Transformational leader in financial services. Strong portco CEO reference profile.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Sendi Young</td><td>iNED Fnality, ex-Interim CCO Modulr</td><td>Harvard MBA / MIT xPRO / FT Board Director Programme. AI-fluent fintech commercial leader. Active NED.</td><td>UK</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Raquel Garcés Sañudo</td><td>Strategic Advisor, iNED &amp; Chair Audit Committee Solunion</td><td>PE-backed fintech exec. INSEAD / Wharton. Payments, lending, digital banking. Board director.</td><td>Spain</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Robert Easter</td><td>Group CRO, Ciklum (ex-CRO DXC, ex-CRO Luxoft)</td><td>GTM transformation and revenue leadership across financial services IT. Wharton Executive.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Fernando Fanton</td><td>CPTO PropertyFinder (ex-CPO Monzo)</td><td>Wharton MBA. PE/growth-stage CPTO pedigree across fintech and marketplace.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Beatrice Khine</td><td>Founder/CEO Thakin Limited (ex-LGIM, ex-CAO Franklin Templeton APAC)</td><td>Financial services C-suite. Asset/investment management background. Fintech operator and NED profile.</td><td>UK</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Andy Browning</td><td>MD Head of Electronic Trading, Valantic FSA</td><td>Fintech business head. Electronic trading, PE/VC &amp; VC-backed scale-ups.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Ronen Lamdan</td><td>Operating Advisor + Interim CRO</td><td>AI/SaaS/B2B GTM specialist. Operating advisor to founders/CEOs. PE-adjacent operator.</td><td>Spain</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Joerg Meiner</td><td>CFO Razor Group (ex-CFO OneFootball)</td><td>CFO across PE-backed growth stage. Berlin-based. Finance/advisory connector in EU growth ecosystem.</td><td>Berlin</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Dan Hardaker</td><td>CPO, N26 (ex-CPO Penta)</td><td>People/HR leadership in PE-backed fintech/neobanking. Relevant for CHRO conversations in PE/VC portcos.</td><td>Berlin</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connectors -->
+    <div class="expandable" id="net-connectors">
+      <div class="expandable-header" onclick="toggleExpand('net-connectors')">
+        <span class="expandable-title">🔗 Connectors &amp; Ecosystem — 4 contacts</span>
+        <span class="expandable-toggle">+</span>
+      </div>
+      <div class="expandable-body">
+        <div class="expandable-content">
+          <p style="font-size: 13px; color: #555; margin-bottom: 20px; font-weight: 300;">People who open doors rather than fill mandates.</p>
+          <table class="fund-table">
+            <thead><tr><th>Name</th><th>Current Role</th><th>Why valuable</th><th>Location</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:700;color:#111;">Samantha Evans</td><td>MD GCC &amp; Africa, Startup Genome</td><td>Series B+ economic advisory / accelerator. Strong relationships across UK late VC and PE. Routes into growth-stage tech ecosystem.</td><td>Abu Dhabi</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Siv Sivanesan</td><td>CEO Lumora Capital / Board Advisor Radiant Search</td><td>Former True International GM. Deep exec search market intelligence. Trusted advisor and market sounding board.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Sid Baveja</td><td>VP UK/IE + Central Europe, Too Good To Go (ex-Just Eat, Goldman Sachs)</td><td>Angel investor (gohenry, Firefly). Consumer tech and fintech operator. VC ecosystem connector.</td><td>London</td></tr>
+              <tr><td style="font-weight:700;color:#111;">Danilo Poccia</td><td>Chief Evangelist EMEA, AWS</td><td>Dual-track: strong NED/advisory candidate AND route into AWS's extensive EMEA partner/customer network.</td><td>London</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px; padding: 16px 20px; background: rgba(31,217,196,0.04); border: 1px solid rgba(31,217,196,0.12); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase;">38 first-degree connections · Building to 75+ by month 6</div>
+      <div style="display: flex; gap: 24px;">
+        <div style="text-align: center;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--red); line-height: 1;">7</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #777; text-transform: uppercase;">Fund-side</div></div>
+        <div style="text-align: center;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--red); line-height: 1;">16</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #777; text-transform: uppercase;">Tech operators</div></div>
+        <div style="text-align: center;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--red); line-height: 1;">11</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #777; text-transform: uppercase;">Commercial</div></div>
+        <div style="text-align: center;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--red); line-height: 1;">4</div><div style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #777; text-transform: uppercase;">Connectors</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- end light-section-alt -->
+
+<hr class="divider">
+
+<!-- SECTION 4: COMMERCIAL -->
+<div class="light-section">
+<section id="commercial">
+  <div class="section-label">04 — Commercial Plan</div>
+  <h2>The Numbers<br>&amp; The Build</h2>
+
+  <!-- Vision -->
+  <div class="vision-block fade-in">
+    <div class="vision-label">3-Year Vision</div>
+    <div class="vision-text">The recognised premium executive search practice integrated within Chapter 2's Embedded Talent & Advisory model, delivering strategic C-suite and transformational leadership appointments across all portfolio and client types.</div>
+  </div>
+
+  <!-- 12 Month Roadmap -->
+  <div class="tag">12-month roadmap</div>
+  <div class="timeline fade-in">
+    <div class="timeline-track">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Weeks 1–2</div>
+        <div class="timeline-title">Define Strategy</div>
+        <ul class="timeline-items">
+          <li>Work closely with Chapter 2 team to define GTM strategy for both Value Creation and Portfolio companies</li>
+          <li>Map warm relationships vs target fund relationships</li>
+          <li>Identify Hg, Thoma Bravo, Vista, Insight, STG as priority targets</li>
+          <li>Develop content strategy and event calendar</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Weeks 2–4</div>
+        <div class="timeline-title">Activate Network</div>
+        <ul class="timeline-items">
+          <li>Start warm client and relationship meetings</li>
+          <li>Build candidate and operator bench to 50+ contacts with regular cadence</li>
+          <li>Activate advisory board — brief key operators on practice focus and mandate pipeline</li>
+          <li>Release first piece of content — targeted intro to key relationships</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Weeks 5–13</div>
+        <div class="timeline-title">First Mandate</div>
+        <ul class="timeline-items">
+          <li>Win first retained mandate</li>
+          <li>Hold first event</li>
+          <li>Content engine running consistently</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Months 3–6</div>
+        <div class="timeline-title">Build Momentum</div>
+        <ul class="timeline-items">
+          <li>First placement delivered</li>
+          <li>2-3 retained mandates in process</li>
+          <li>First Renoir integration conversation</li>
+          <li>Associate hire considered</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">Months 7–12</div>
+        <div class="timeline-title">Establish Practice</div>
+        <ul class="timeline-items">
+          <li>3-5 placements total</li>
+          <li>Repeat mandate from at least one fund</li>
+          <li>Principal hire process started</li>
+          <li>Visible market presence: content, events, relationships</li>
+        </ul>
+      </div>
+    </div>
+
+  <!-- KPIs -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Granular KPIs</div>
+  </div>
+  <!-- Activity table -->
+  <div style="margin-top: 8px; overflow-x: auto;">
+    <table class="rev-table fade-in">
+      <thead>
+        <tr>
+          <th>Activity metric</th>
+          <th>Month 1–2</th>
+          <th>Month 3–4</th>
+          <th>Month 5+</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 500; color: #111;">Client conversations</td>
+          <td>1–2 / week</td>
+          <td>2–3 / week</td>
+          <td>3–5 / week</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 500; color: #111;">Candidate / operator connections</td>
+          <td>10–15 / week</td>
+          <td>15–20 / week</td>
+          <td>20–25 / week</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 500; color: #111;">Market interactions (total)</td>
+          <td>20–25 / week</td>
+          <td>25–35 / week</td>
+          <td>35–50 / week</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pipeline + Brand tables -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
+    <div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px;">Pipeline</div>
+      <table class="rev-table fade-in">
+        <tbody>
+          <tr>
+            <td style="font-weight: 500; color: #111;">First retained mandate won</td>
+            <td>By end of month 3</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500; color: #111;">Active mandates simultaneously</td>
+            <td>2–3 by month 6<br>4–6 by month 12</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500; color: #111;">Total mandates won in Year 1</td>
+            <td>6–8</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500; color: #111;">From Chapter 2 warm introductions</td>
+            <td>Minimum 2</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500; color: #111;">Repeat mandate — same client</td>
+            <td>At least 1 by month 12</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px;">Brand &amp; Market Presence</div>
+      <table class="rev-table fade-in">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Month 3</th>
+            <th>Month 6</th>
+            <th>Month 12</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight: 500; color: #111;">Advisory bench size</td>
+            <td>25</td>
+            <td>50</td>
+            <td>75+</td>
+          </tr>
+          <tr>
+            <td style="font-weight: 500; color: #111;">Events hosted or co-hosted</td>
+            <td>1</td>
+            <td>2</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Team structure</div>
+    <div class="team-chart fade-in">
+      <div class="team-you">
+        <div class="team-you-name">Sam Randall</div>
+        <div class="team-you-role">Senior Partner · CTO, CIO &amp; CPO · Practice Lead</div>
+      </div>
+      <div class="team-row" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="team-card">
+          <div class="team-card-title">Partner / Principal 1</div>
+          <div class="team-card-role">CTO minus-one — VP Engineering, Head of Product, technical leadership below CTO level</div>
+          <div class="team-card-when">From Month 15–18 (Year 2)</div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-title">Partner / Principal 2</div>
+          <div class="team-card-role">Value Creation focus — fund-side operating partner and AI transformation mandates</div>
+          <div class="team-card-when">From Month 18–24 (Year 2+)</div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-title">Associate / Sr Associate × 2–3</div>
+          <div class="team-card-role">Research, longlisting, process support and candidate management. Grows with billing volume.</div>
+          <div class="team-card-when">Year 1–2 rolling</div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-title">Optional: Principal 3</div>
+          <div class="team-card-role">Interim specialist — if interim volume warrants dedicated coverage</div>
+          <div class="team-card-when">Year 2–3 decision</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Revenue -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Revenue expectations</div>
+    <table class="rev-table fade-in">
+      <thead>
+        <tr>
+          <th>Stream</th>
+          <th>Year 1</th>
+          <th>Year 2</th>
+          <th>Year 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Personal billings</td>
+          <td>£400–500k<br><span style="font-size: 11px; color: var(--muted);">£150k H1 · £250–350k H2</span></td>
+          <td>£500–700k<br><span style="font-size: 11px; color: var(--muted);">£125–175k per quarter</span></td>
+          <td>£1M–£1.5M+</td>
+        </tr>
+        <tr>
+          <td>Team billings</td>
+          <td>—<br><span style="font-size: 11px; color: var(--muted);">Solo practitioner</span></td>
+          <td>£300–400k<br><span style="font-size: 11px; color: var(--muted);">1× Principal</span></td>
+          <td>£600–800k<br><span style="font-size: 11px; color: var(--muted);">2× Principals, £300–400k each</span></td>
+        </tr>
+        <tr>
+          <td>Referred work<br><span style="font-size: 11px; color: var(--muted);">Interim · Contingent · Renoir</span></td>
+          <td>£50–100k</td>
+          <td>£100–200k</td>
+          <td>£200–350k</td>
+        </tr>
+        <tr class="total-row">
+          <td>Total contribution</td>
+          <td>£450–600k</td>
+          <td>£900–1.3M</td>
+          <td>£1.8–2.65M+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scale & Growth -->
+  <div style="margin-top: 80px;">
+    <div class="tag">Scale &amp; growth</div>
+  </div>
+  <div class="growth-grid fade-in">
+    <div class="growth-card">
+      <div class="growth-label">Lateral expansion</div>
+      <div class="growth-title">Same thesis, wider net</div>
+      <ul class="growth-items">
+        <li>Late stage VC — pre-IPO, growth equity, transformation-heavy businesses</li>
+        <li>Fintech — existing network depth, regulated environment requires specialist understanding</li>
+        <li>Defence, Deep &amp; Space Tech — early mover, no specialist search coverage</li>
+      </ul>
+    </div>
+    <div class="growth-card">
+      <div class="growth-label">Geographical</div>
+      <div class="growth-title">Follow the funds</div>
+      <ul class="growth-items">
+        <li>EU — NL &amp; Benelux, Germany, Nordics, France, Spain/Portugal as hotspots</li>
+        <li>PE funds have pan-EU approach — delivering well in UK portcos opens EU mandates</li>
+        <li>Start with remote delivery from London, then consider on-the-ground hire</li>
+        <li>US — mid to long-term horizon, follow the fund relationships</li>
+      </ul>
+    </div>
+    <div class="growth-card">
+      <div class="growth-label">Team</div>
+      <div class="growth-title">Build the bench</div>
+      <ul class="growth-items">
+        <li>Year 1: Solo + associate support. Prove the model.</li>
+        <li>Year 2 (Month 15-18): Principal 1 + Associate hire alongside</li>
+        <li>Year 2+ (Month 18-24): Principal 2 — Value Creation specialist</li>
+        <li>Year 2-3: Consider geographical expansion — EU (NL, Germany, Nordics, France), US, RoW following fund relationships</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</div><!-- end light-section -->
+
+<hr style="border: none; border-top: 1px solid #222;">
+
+<!-- FOOTER -->
+<footer style="background: #2A2A2A; padding: 60px 48px; max-width: 100%;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+  <div class="closing-statement fade-in" style="color: #F0F0F0;">
+    The practice I'm describing doesn't exist in the European market yet.<br>
+    Executive search is the next frontier for Embedded Talent. The time to <span style="color: var(--red);">scale it</span> is now.
+  </div>
+  <div class="footer-meta" style="justify-content: flex-end;">
+    <div class="footer-contact">
+      <div class="footer-name"> Chapter 2</div>
+      <div class="footer-date">Strategic Positioning Document · 2026</div>
+    </div>
+  </div>
+  </div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrollTop = doc.scrollTop || document.body.scrollTop;
+    const scrollHeight = doc.scrollHeight - doc.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+  });
+
+  // Fade in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Expandable sections
+  function toggleExpand(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  // Platform tiles
+  function togglePlatform(el) {
+    el.classList.toggle('open');
+  }
+
+  // Content tiles
+  document.querySelectorAll('.content-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const detail = this.querySelector('.content-detail');
+      if (detail) {
+        detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+        this.style.background = detail.style.display === 'block' ? '#fff' : '';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
